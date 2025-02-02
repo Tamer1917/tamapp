@@ -21,10 +21,12 @@ const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
 if (tgUser) {
     const userId = tgUser.id.toString();
     const username = tgUser.first_name;
-
+    const win = tgUser.win;
+    
     console.log("User ID:", userId);
     console.log("First Name:", username);
-
+   console.log("win:", win);
+    
     async function checkAndCreateUser(userId, username) {
         const userRef = doc(db, "users", userId);
         const userSnap = await getDoc(userRef);
@@ -35,8 +37,8 @@ if (tgUser) {
 
             document.getElementById("username").textContent = userData.username || username;
             document.getElementById("points").textContent = userData.points || 0;
-    
-        
+            document.getElementById("win").textContent = userData.win || 0;
+            document.getElementById("lose").textContent = userData.lose || 0;
             // بدء شريط التقدم
             startProgress(userRef);
         } else {
@@ -50,7 +52,8 @@ if (tgUser) {
 
             document.getElementById("username").textContent = userData.username || username;
             document.getElementById("points").textContent = userData.points || 0;
-          
+            document.getElementById("win").textContent = userData.win || 0;
+            document.getElementById("lose").textContent = userData.lose || 0;
             // بدء شريط التقدم
             startProgress(userRef);
         }
