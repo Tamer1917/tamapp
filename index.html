@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -10,125 +9,97 @@
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <!-- خط Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
     <script type="module" src="script.js"></script>
-
     <style>
-        /* ✅ تحسين التنسيقات العامة */
-        * {
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
             font-family: 'Cairo', sans-serif;
-        }
-        body, html {
             background: linear-gradient(to bottom, #1e1e2f, #12121a);
             color: white;
-            text-align: center;
             height: 100%;
-            width: 100%;
             overflow: hidden;
         }
+
+        .container {
+            max-width: 350px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
         .loading-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 60vh;
             background-color: #12121a;
             color: white;
             font-size: 22px;
             font-weight: bold;
-            position: absolute;
-            width: 100%;
-            z-index: 10;
         }
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            max-width: 350px;
-            margin: 20px auto 10px;
-            text-align: center;
-        }
-        .username {
-            font-size: 22px;
-            font-weight: bold;
-        }
-        .points {
-            font-size: 20px;
-            color: #facc15;
-            font-weight: bold;
-        }
+
         .progress-container {
-            width: 80%;
+            width: 60%;
             background-color: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
-            margin: 20px auto;
             padding: 5px;
-            position: relative;
-            top: -10px;
+            margin: 20px 0;
+            height: 6px;
         }
+
         .progress-bar {
             width: 0%;
-            height: 12px;
+            height: 6px;
             background: linear-gradient(to right, #facc15, #ff9800);
             border-radius: 10px;
             transition: width 0.5s ease-in-out;
         }
+
         .progress-text {
-            position: absolute;
-            width: 100%;
-            top: 0;
-            line-height: 12px;
             font-size: 14px;
             color: white;
+            margin-top: 5px;
         }
-        #claim-btn {
-            display: none;
+
+        .btn {
+            display: inline-block;
             background: linear-gradient(to right, #ff9800, #facc15);
             color: black;
             font-weight: bold;
             border: none;
-            padding: 8px 14px;
+            padding: 10px 20px;
             cursor: pointer;
-            font-size: 10px;
-            border-radius: 20px;
-            margin-top: 10px;
-            transition: transform 0.2s ease-in-out;
-        }
-        #claim-btn:hover {
-            transform: scale(1.05);
-        }
-        .play-now-btn {
-            display: inline-block;
-            background: #facc15;
-            color: black;
-            font-size: 18px;
-            padding: 15px 30px;
             border-radius: 25px;
-            text-decoration: none;
-            margin-top: 20px;
-            font-weight: bold;
+            margin: 10px;
             transition: transform 0.2s ease-in-out;
         }
-        .play-now-btn:hover {
-            transform: scale(1.05);
-            background: #ff9800;
-        }
-        .bottom-section {
-            width: 100%;
-            height: 250px;
-            background: url('https://your-image-url.com/image.png') no-repeat center center;
-            background-size: cover;
-            position: absolute;
-            bottom: 50px;
-            left: 0;
-        }
+
+        #claim-btn {
+                display: block;
+                width: 18%;
+                height: 40px;
+                background: linear-gradient(to right, #a493e7, #858481);
+                margin: 20px auto; /* توسيط الزر أفقيًا */
+                position: absolute;
+                left: 76%;
+                transform: translate(-50%, -10px); /* تحريك الزر للأعلى قليلاً */
+                font-size: 10px; /* تكبير الخط إذا لزم الأمر */
+                top: 100px; /* تعديل الموضع لجعله أعلى */
+            }
+            #play-btn {
+                background: linear-gradient(to right, #86ef7b, #514e49); /* لون برتقالي */
+                color: white; /* لون النص */
+                font-weight: bold;
+                width:40%;
+                height: 60px;
+            }
+            
         .nav-bar {
-            position: absolute;
+            position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
@@ -137,7 +108,10 @@
             justify-content: space-around;
             padding: 10px 0;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            background: url('material/images/WhatsApp Image 2025-02-21 at 08.58.00_7b32e874.jpg) no-repeat center center;
+            background-size: cover;
         }
+
         .nav-item {
             color: white;
             font-size: 14px;
@@ -146,52 +120,93 @@
             padding: 10px;
             transition: color 0.3s;
         }
+
         .nav-item.active {
             color: #facc15;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            margin-top:70px
+        }
+
+        th, td {
+            border: 1px solid #969090;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2b2b3f;
+            color: #d7fbbc;
+        }
+
+        td {
+            color: #f8f2f6;
+        }
+
+        h1, h2 {
+            color: #afe36c;
         }
     </style>
 </head>
 <body>
-
-    <!-- الصفحة الرئيسية -->
-    <div id="main-content" class="hidden">
-        <div class="container">
-            <div class="username" id="username">USER: ...</div>
-            <div class="points" id="points">POINT: ...</div> 
-            <div class="win" id="win">: ...</div> 
-              <div class="lose" id="lose">:خسارة ...</div> 
-        </div>
-
-        <!-- شريط التقدم -->
+    <div class="container">
+        <h1 id="greeting">Hello ...</h1>
         <div class="progress-container">
-             <div class="progress-bar" id="mining-progress"></div>
-             <div class="progress-text" id="progress-text">0 / 100</div>
+            <div class="progress-bar" id="mining-progress"></div>
+            <div class="progress-text" id="progress-text">0 / 100</div>
         </div>
+        
 
-        <!-- زر CLAIM -->
-        <button id="claim-btn" onclick="claimReward()">♟ CLAIM</button>
+      
 
-        <!-- زر العب الآن -->
-        <a href="#" class="play-now-btn" onclick="redirectToChess()">🎮 PLAY NOW</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Points</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="username">...</td>
+                    <td id="points">0</td>
+                    <td id="win">...</td>
+                    <td id="lose">...</td>
+                </tr>
+            </tbody>
+        </table>
 
-        <!-- القسم السفلي -->
-        <div class="bottom-section"></div>
 
-        <!-- شريط التنقل -->
-        <div class="nav-bar">
-            <div class="nav-item active">🏠 HOME</div>
-            <div class="nav-item">📋 TASK</div>
-            <div class="nav-item">💰 WALLET</div>
-        </div>
+    <button class="btn" id="claim-btn" onclick="claimReward()">♟ CLAIM</button>
+    <button class="btn" id="play-btn" onclick="redirectToChess()">🎮 PLAY NOW</button>
+
+
+    <div class="nav-bar">
+        <div class="nav-item active">🏠 HOME</div>
+        <div class="nav-item">📋 TASK</div>
+        <div class="nav-item">💰 WALLET</div>
     </div>
 
     <script>
-        function redirectToChess() {
-            // استخدام window.location.assign للانتقال إلى صفحة CHESS.HTML
-            window.location.assign("CHESS.HTML");
-            window.location.assign("https://tamapp-umber.vercel.app/chess.html");
-        }
-    </script>
+        // تأكد من أن Telegram WebApp جاهز
+        Telegram.WebApp.ready();
 
+        // الحصول على اسم المستخدم من Telegram
+        const user = Telegram.WebApp.initDataUnsafe.user;
+        const username = user ? user.username : 'غير معروف';
+
+        // تحديث النص في الصفحة
+        document.getElementById("greeting").textContent = "Hello " + username;
+        document.getElementById("username").textContent = username;
+        document.getElementById("points").textContent = "0";
+        document.getElementById("win").textContent = "0";
+        document.getElementById("lose").textContent = "0";
+    </script>
 </body>
 </html>
